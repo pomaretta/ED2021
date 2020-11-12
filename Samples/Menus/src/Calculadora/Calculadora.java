@@ -61,28 +61,29 @@ public class Calculadora {
             System.out.print("\nIntroduce tu orden: ");
             try {
                 userOrder = userIn.nextInt();
-            } catch (InputMismatchException userError){userError.printStackTrace();}
+            } catch (Exception userError){
+                System.out.println("Error.");userOrder = 0;}
 
             switch (userOrder){
                 case 1 -> {
                     // Sumar
                     loadOperation("suma");
-                    System.out.println("El resultado es: " + operationResult + "\n");
+                    System.out.println("\nEl resultado es: " + operationResult + "\n");
                 }
                 case 2 -> {
                     // Restar
                     loadOperation("resta");
-                    System.out.println("El resultado es: " + operationResult + "\n");
+                    System.out.println("\nEl resultado es: " + operationResult + "\n");
                 }
                 case 3 -> {
                     // Dividir
                     loadOperation("division");
-                    System.out.println("El resultado es: " + operationResult + "\n");
+                    System.out.println("\nEl resultado es: " + operationResult + "\n");
                 }
                 case 4 -> {
                     // Multiplicar
                     loadOperation("multiplicar");
-                    System.out.println("El resultado es: " + operationResult + "\n");
+                    System.out.println("\nEl resultado es: " + operationResult + "\n");
                 }
                 case 5 -> // Salir
                         exit = true;

@@ -49,8 +49,8 @@ public class Operation extends Calculadora {
             this.y = userData.nextInt();
             try{
                 Calculadora.operationResult = new Addition().add(x,y);
-            } catch (ArithmeticException error){error.printStackTrace();}
-        } catch (InputMismatchException error) { error.printStackTrace(); }
+            } catch (Exception error){error.printStackTrace();}
+        } catch (Exception error) { error.printStackTrace(); }
     }
 
 
