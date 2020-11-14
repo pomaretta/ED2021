@@ -16,6 +16,9 @@
  */
 
 import Calculadora.Calculadora;
+import Empresa.Empresa;
+import EmpresaLite.EmpresaLite;
+
 import java.util.Scanner;
 
 public class Main {
@@ -24,8 +27,10 @@ public class Main {
 
     // Aplicaciones
     public static Calculadora calculadora;
+    public static EmpresaLite empresaLite;
+    public static Empresa empresa;
 
     public static void main(String[] args) {
-        calculadora = new Calculadora(new Scanner(System.in));
+        empresa = new Empresa();
     }
 }
