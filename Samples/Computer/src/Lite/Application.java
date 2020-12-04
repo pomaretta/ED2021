@@ -39,6 +39,10 @@ public class Application {
         }
     }
 
+    public boolean isOpen(){
+        return this.isOpen;
+    }
+
     public int getSoftwareSpaceRequirements() {
         return (int)(softwareSpaceRequirements * 1024);
     }
