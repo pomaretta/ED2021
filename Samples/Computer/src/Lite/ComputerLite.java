@@ -1,5 +1,22 @@
 package Lite;
 
+/*
+
+    Project     ED21
+    Package     Lite
+
+    Version     1.0
+    Author      Carlos Pomares
+    Date        2020-12-08
+
+    DESCRIPTION
+
+*/
+
+/**
+ * @author Carlos Pomares
+ */
+
 public class ComputerLite {
     public static void main(String[] args) {
 
@@ -16,46 +33,42 @@ public class ComputerLite {
 
         // Applications
         Application s1,s2;
-        s1 = new Application("Word","1.0",0.5f,1);
-        s2 = new Application("Affinity Photo", "2.5",0.2f,0.6f);
 
-        // Install Operative System in Computer.
+        s1 = new Application("Word","1.0",
+                0.5f,1);
+
+        s2 = new Application("Affinity Photo", "2.5",
+                0.2f,0.6f);
+
+
         try {
+
+            // Install Operative System in the Computer.
             c1.installOperatingSystem(windows);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
 
-        // Wake up the computer
-        try {
+            // Wake up the computer and assign the system on RAM.
             c1.startComputer();
-        }catch (Exception e){
-            e.getMessage();
-        }
 
-        // Install Applications in Operative System.
-        try {
+            // Install Applications in Operative System.
             windows.installApplication(s1);
             windows.installApplication(s2);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
 
-        // Open or close applications
-        try {
+            /*
+                Opening applications will assign RAM on the system.
+                Closing applications will release RAM on the system.
+             */
             windows.openApplication(windows.getOsSoftware().get(windows.getOsSoftware().indexOf(s1)));
             windows.openApplication(windows.getOsSoftware().get(windows.getOsSoftware().indexOf(s2)));
-        } catch (Exception e){
-            e.getMessage();
-        }
-        // windows.closeApplication(windows.getOsSoftware().get(windows.getOsSoftware().indexOf(s1)));
-        // windows.closeApplication(windows.getOsSoftware().get(windows.getOsSoftware().indexOf(s2)));
+            // windows.closeApplication(windows.getOsSoftware().get(windows.getOsSoftware().indexOf(s1)));
+            // windows.closeApplication(windows.getOsSoftware().get(windows.getOsSoftware().indexOf(s2)));
 
-        // Uninstalling by given application
-        try {
+            // Uninstalling by given application
             windows.uninstallApplication(windows.getOsSoftware().get(windows.getOsSoftware().indexOf(s2)));
+
+
         } catch (Exception e){
-            e.getMessage();
+            // If an error occurs, will be caught here.
+            System.out.println(e.getMessage());
         }
 
         // Before formatting.
@@ -68,13 +81,5 @@ public class ComputerLite {
         System.out.println("After formatting.");
         System.out.println(c1.toString() + "\n\n");
 
-        /*
-        System.out.println("==== Software ====");
-        System.out.printf("%-15s %-15s","Name","isOpen");
-        System.out.println(c1.toString());
-        for(Application app : windows.getOsSoftware()){
-            System.out.printf("\n%-15s %-15b",app.getSoftwareName(),app.isOpen());
-        }
-        */
     }
 }

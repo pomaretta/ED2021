@@ -1,5 +1,24 @@
 package Lite;
 
+/*
+
+    Project     ED21
+    Package     Lite
+
+    Version     1.0
+    Author      Carlos Pomares
+    Date        2020-12-08
+
+    DESCRIPTION
+    An Operating System that manages the hardware and software that contains.
+    Allows the user to interact with it.
+
+*/
+
+/**
+ * @author Carlos Pomares
+ */
+
 import java.util.ArrayList;
 
 public class OperativeSystem {
@@ -23,9 +42,17 @@ public class OperativeSystem {
     // Operative System assigned hardware (Computer)
     private Computer osComputer;
 
-    /*
-        Constructor
-        Assign the initial values of the new Operative System and initializes the array list of the software.
+
+    /**
+     *
+     * Sets the initial values of the Operative System data.
+     *
+     * @param osName assigns the name of the OS.
+     * @param osVersion assigns the version of the OS.
+     * @param osArchitecture assigns the architecture of the OS.
+     * @param isOnlyCommand assigns if the OS is in command mode.
+     * @param osSpaceRequirement assigns the Hard drive requirements of the OS.
+     * @param osRamMemoryRequirement assigns the RAM Memory requirements of the OS.
      */
     public OperativeSystem(String osName, String osVersion, String osArchitecture, boolean isOnlyCommand, int osSpaceRequirement, int osRamMemoryRequirement) {
         this.osName = osName;
@@ -37,24 +64,39 @@ public class OperativeSystem {
         osSoftware = new ArrayList<Application>();
     }
 
-    // Method for setting the computer in the operative system at the installation time.
+    /**
+     *
+     * This method will set the computer that install the Operative System.
+     *
+     * @param computer the computer that installs the operative system.
+     */
     public void setComputer(Computer computer){
         this.osComputer = computer;
     }
 
-    // Method for starting the system through the computer.
+    /**
+     * This method will start the system and assign the RAM requirement on the computer RAM.
+     */
     public void startSystem(){
         this.osComputer.updateRamSpace(getOsRamMemoryRequirement(),"-");
         this.systemState = true;
     }
 
-    // Method for stopping the system through the computer.
+    /**
+     * This method will release the RAM of the operative system in the computer RAM.
+     */
     public void stopSystem(){
         this.osComputer.updateRamSpace(getOsRamMemoryRequirement(),"+");
         this.systemState = false;
     }
 
-    // Method for installing applications and update disk space in the computer.
+    /**
+     *
+     * This method allows the computer to install applications in the system.
+     *
+     * @param app the application object that will be installed.
+     * @throws Exception if the same application is already installed on the system.
+     */
     public void installApplication(Application app) throws Exception {
         if(this.osSoftware.contains(app)){
             throw new Exception("App already exists.");
@@ -66,7 +108,13 @@ public class OperativeSystem {
         }
     }
 
-    // Method for uninstalling application, update computer requirements and software list.
+    /**
+     *
+     * This method allows the computer to unistall an application that it is in the OS.
+     *
+     * @param app the application object that will be uninstalled.
+     * @throws Exception if the application object doesn't exists on the system.
+     */
     public void uninstallApplication(Application app) throws Exception {
         if(this.osSoftware.contains(app)){
             if(app.isOpen()){
@@ -79,44 +127,56 @@ public class OperativeSystem {
         }
     }
 
-    // Method for opening an application and update the ram space.
+    /**
+     *
+     * This method allows the operative system to open an application and assign
+     * the RAM space requirement on the computer hardware.
+     *
+     * @param app the application that will be opened.
+     * @throws Exception if the application needs more RAM memory than the actual free space.
+     */
     public void openApplication(Application app) throws Exception {
         if(checkRamSpace(app.getSoftwareRamMemoryRequirements())){
-            try {
-                app.openApp();
-            } catch (Exception e){
-                e.getMessage();
-            }
+            app.openApp();
             this.osComputer.updateRamSpace(app.getSoftwareRamMemoryRequirements(),"-");
         } else {
             throw new Exception("RAM requirement not satisfied.");
         }
     }
 
-    // Method for closing an application and update the ram space.
-    public void closeApplication(Application app){
-        try {
-            app.closeApp();
-        } catch (Exception e){
-            e.getMessage();
-        }
+    /**
+     *
+     * This method will close an application and release his RAM requirement on
+     * the computer hardware.
+     *
+     * @param app the application that will be closed.
+     * @throws Exception if the application is already closed.
+     */
+    public void closeApplication(Application app) throws Exception{
+        app.closeApp();
         this.osComputer.updateRamSpace(app.getSoftwareRamMemoryRequirements(),"+");
     }
 
+    /**
+     *
+     * This method allows the OS to check if the spaceToBeSet fits on the hard drive.
+     *
+     * @param spaceToBeSet the space that will be set on the computer hard drive.
+     * @return boolean if it fits on the hard drive.
+     */
     private boolean checkDiskSpace(int spaceToBeSet){
-        if(spaceToBeSet < this.osComputer.getMaxHardDisk() && (this.osComputer.getCurrentHardDisk() + spaceToBeSet) <= this.osComputer.getMaxHardDisk()){
-            return true;
-        } else {
-            return false;
-        }
+        return spaceToBeSet < this.osComputer.getMaxHardDisk() && (this.osComputer.getCurrentHardDisk() + spaceToBeSet) <= this.osComputer.getMaxHardDisk();
     }
 
+    /**
+     *
+     * This method allows the OS to check if the spaceToBeSet fits on the RAM memory.
+     *
+     * @param spaceToBeSet the space that will be set on the computer RAM memory.
+     * @return boolean if it fits on the RAM memory.
+     */
     private boolean checkRamSpace(int spaceToBeSet){
-        if(spaceToBeSet < this.osComputer.getMaxRamMemory() && (this.osComputer.getCurrentRamMemory() + spaceToBeSet) <= this.osComputer.getMaxRamMemory()){
-            return true;
-        } else {
-            return false;
-        }
+        return spaceToBeSet < this.osComputer.getMaxRamMemory() && (this.osComputer.getCurrentRamMemory() + spaceToBeSet) <= this.osComputer.getMaxRamMemory();
     }
 
     public String getOsName() {
@@ -131,9 +191,17 @@ public class OperativeSystem {
     public boolean isOnlyCommand() {
         return isOnlyCommand;
     }
+
+    /**
+     * @return the Hard drive requirement in MB.
+     */
     public int getOsSpaceRequirement() {
         return osSpaceRequirement * 1024;
     }
+
+    /**
+     * @return the RAM memory requirement in MB.
+     */
     public int getOsRamMemoryRequirement() {
         return osRamMemoryRequirement * 1024;
     }

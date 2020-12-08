@@ -1,5 +1,25 @@
 package Lite;
 
+/*
+
+    Project     ED21
+    Package     Lite
+
+    Version     1.0
+    Author      Carlos Pomares
+    Date        2020-12-08
+
+    DESCRIPTION
+    The physical part of the system that have the Hard drive and RAM Memory.
+
+*/
+
+/**
+ * @author Carlos Pomares
+ */
+
+import java.util.ArrayList;
+
 public class Computer {
 
     // Name of the computer.
@@ -17,9 +37,13 @@ public class Computer {
     // Variable containing the operative system of the computer.
     private OperativeSystem operativeSystem;
 
-    /*
-        Constructor
-        Asign some initial variables that must have one computer.
+    /**
+     *
+     * This is the constructor and sets the initial values of the computer.
+     *
+     * @param name is the name of the computer.
+     * @param ramMemory is the maximum space of the RAM Memory.
+     * @param hardDisk is the maximum space of the Hard Drive.
      */
     public Computer(String name, int ramMemory, int hardDisk) {
         this.name = name;
@@ -29,8 +53,14 @@ public class Computer {
         this.hardDisk = maxHardDisk;
     }
 
-    /*
-        Method for installing an operative system in the computer. It updates the ram memory and disk space.
+    /**
+     *
+     * This method allows a computer to install an Operative System, this method
+     * will set the operativeSystem variable and asign the drive space requirement
+     * of the OS.
+     *
+     * @param os is the OS that will be installed on the computer.
+     * @throws Exception is there is an Operative System already installed will throw and Exception.
      */
     public void installOperatingSystem(OperativeSystem os) throws Exception{
         if(this.operativeSystem == null && this.hardDisk >= os.getOsSpaceRequirement()){
@@ -46,7 +76,13 @@ public class Computer {
         }
     }
 
-    // Method for updating the drive space currently assigned in computer.
+    /**
+     *
+     * This method allows the OS to interact with the Hard Drive to apply modifications.
+     *
+     * @param spaceToUpdate is the space that gill ve added or subtracted on the Hard Drive.
+     * @param op is the operation that will be executed.
+     */
     public void updateDriveSpace(int spaceToUpdate, String op){
         switch (op){
             case "+" -> {
@@ -58,7 +94,13 @@ public class Computer {
         }
     }
 
-    // Method for updating the ram space currently assigned in computer.
+    /**
+     *
+     * This method allows the OS to interact with the computer hardware and modify it.
+     *
+     * @param spaceToUpdate is the space to be updated in the RAM component.
+     * @param op is the operation that will be executed on the RAM, can be + or -.
+     */
     public void updateRamSpace(int spaceToUpdate, String op){
         switch (op){
             case "+" -> {
@@ -70,14 +112,22 @@ public class Computer {
         }
     }
 
-    // Method for reset the default values in hardDisk and ramMemory in the computer
+    /**
+     *  This method will reset three main components of variable data of the computer.
+     *  Will set his specifications to maximum, representing the formatted system.
+     */
     public void formatSystem(){
         this.operativeSystem = null;
         this.hardDisk = this.maxHardDisk;
         this.ramMemory = this.maxRamMemory;
     }
 
-    // Open the system
+    /**
+     *
+     * This method opens the computer if it's closed and start the system.
+     *
+     * @throws Exception if the computer is already opened.
+     */
     public void startComputer() throws Exception {
         if(this.computerState){
             throw new Exception("Computer is already open.");
@@ -89,7 +139,13 @@ public class Computer {
         }
     }
 
-    // Open the system
+    /**
+     *
+     * This method invokes the close of the computer and will stop the system and
+     * set the computerState to false.
+     *
+     * @throws Exception if the computer is already closed.
+     */
     public void stopComputer() throws Exception {
         if(this.computerState){
             throw new Exception("Computer is closed.");
@@ -98,8 +154,6 @@ public class Computer {
             this.computerState = false;
         }
     }
-
-    // Close the system
 
     public OperativeSystem getOperativeSystem(){
         return this.operativeSystem;
@@ -123,6 +177,18 @@ public class Computer {
 
     @Override
     public String toString() {
+
+        // Array of applications temporally
+        ArrayList<Application> applications;
+
+        // If operative system exists will show an application objects.
+        if(operativeSystem != null){
+            applications = operativeSystem.getOsSoftware();
+        } else {
+            // Else if do not exists an operative system in the computer will show null
+            applications = null;
+        }
+
         return "Computer{" +
                 "name='" + name + '\'' +
                 ", maxRamMemory=" + maxRamMemory +
@@ -131,6 +197,7 @@ public class Computer {
                 ", Free hardDisk=" + hardDisk +
                 ", computerState=" + computerState +
                 ", operativeSystem=" + operativeSystem +
+                ", Applications=" + applications +
                 '}';
     }
 }
