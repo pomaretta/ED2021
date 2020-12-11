@@ -11,8 +11,6 @@
     
 */
 
-import Endevina.Endevina;
-import Gui.MainScreen;
 import Gui.Start;
 
 /**
@@ -23,6 +21,8 @@ public class EndevinaGame {
     public static void main(String[] args) {
 
         Start screen = new Start();
+        screen.setSize(400,300);
+        screen.setLocationRelativeTo(null);
         screen.setVisible(true);
         // Endevina juego = new Endevina();
 

@@ -50,14 +50,16 @@ public class MainScreen extends JFrame {
     private int actualTries = 0;
     private int maximumTries = 0;
     private int hiddenNumber;
+    private boolean gameType;
 
-    public MainScreen(int maximumTries){
+    public MainScreen(int maximumTries,boolean gameType){
         super("Adivina el número");
         this.setContentPane(mainPanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
 
         this.maximumTries = maximumTries;
+        this.gameType = gameType;
         startGame();
 
         checkNumberButton.addActionListener(new ActionListener() {
@@ -84,33 +86,56 @@ public class MainScreen extends JFrame {
         refreshList();
 
         this.hiddenNumberLabel.setText("**");
-        this.hiddenNumber = RandomNumber.generateNumber(9);
+
+        if(gameType){
+            this.hiddenNumber = RandomNumber.generateNumber(99);
+        } else {
+            this.hiddenNumber = RandomNumber.generateNumber(9);
+        }
+
         this.numberOfTriesLabel.setText(Integer.toString(this.maximumTries));
+
+        // System.out.println("GAME TYPE: " + gameType + " HIDDEN NUMBER: " + hiddenNumber);
+
     }
 
     private void checkNumber(ActionEvent e){
 
         int number;
+        int optionPanel;
 
-        number = Integer.parseInt(numberField.getText());
+        try {
+            number = Integer.parseInt(numberField.getText());
 
-        if(Endevinador.checkNumber(number,this.hiddenNumber)){
-            success = true;
-            this.hiddenNumberLabel.setText(Integer.toString(this.hiddenNumber));
-            String message = String.format("Winner.\nHidden number: %d",this.hiddenNumber);
-            System.out.println();
-            int i = JOptionPane.showConfirmDialog(this,message);
-            switch (i){
-                case 0 -> startGame();
-                case 1,3 -> this.dispatchEvent(new WindowEvent(this,WindowEvent.WINDOW_CLOSING));
+            if(Endevinador.checkNumber(number,this.hiddenNumber)){
+                success = true;
+                this.hiddenNumberLabel.setText(Integer.toString(this.hiddenNumber));
+                String message = String.format("Winner.\nHidden number: %d\nNew game?",this.hiddenNumber);
+                System.out.println();
+                optionPanel = JOptionPane.showConfirmDialog(this,message);
+                switch (optionPanel){
+                    case 0 -> startGame();
+                    case 1,2 -> this.dispatchEvent(new WindowEvent(this,WindowEvent.WINDOW_CLOSING));
+                }
+            } else if(this.actualTries == 0){
+                String msg = String.format("Game over, no tries remaining.\nHidden number: " + this.hiddenNumber + "\nNew game?");
+                optionPanel = JOptionPane.showConfirmDialog(this,msg);
+                switch (optionPanel){
+                    case 0 -> startGame();
+                    case 1,2 -> this.dispatchEvent(new WindowEvent(this,WindowEvent.WINDOW_CLOSING));
+                }
+            } else {
+                this.actualTries--;
+                this.numberOfTriesLabel.setText(Integer.toString(this.actualTries));
+                this.hintLabel.setText(generateHint(number,this.hiddenNumber));
+                this.introducedNumbersArray.add(number);
+                refreshList();
             }
-        } else {
-            this.actualTries--;
-            this.numberOfTriesLabel.setText(Integer.toString(this.actualTries));
-            this.hintLabel.setText(generateHint(number,this.hiddenNumber));
-            this.introducedNumbersArray.add(number);
-            refreshList();
+        } catch (Exception error){
+            JOptionPane.showMessageDialog(this,"Error: " + error.getMessage());
         }
+
+
     }
 
     private void refreshList(){

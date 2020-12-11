@@ -14,6 +14,8 @@ package Gui;
 */
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -26,8 +28,11 @@ public class Start extends JFrame {
     private JTextField numberOfTries;
     private JButton startGame;
     private JPanel mainPanel;
+    private JRadioButton nineGameButton;
+    private JRadioButton nintyGameButton;
 
     private MainScreen game;
+    private boolean gameType = false;
 
     public Start(){
         super("Adivinator");
@@ -42,12 +47,26 @@ public class Start extends JFrame {
             }
         });
 
+        ButtonGroup buttonGroup = new ButtonGroup();
+        buttonGroup.add(this.nineGameButton);
+        buttonGroup.add(this.nintyGameButton);
+
+        this.nineGameButton.setSelected(true);
+
     }
 
     private void startGame(ActionEvent e){
         try {
-            game = new MainScreen(Integer.parseInt(this.numberOfTries.getText()));
+
+            if(this.nineGameButton.isSelected()){
+                this.gameType = false;
+            } else if(this.nintyGameButton.isSelected()){
+                this.gameType = true;
+            }
+
+            game = new MainScreen(Integer.parseInt(this.numberOfTries.getText()),this.gameType);
             game.setSize(600,400);
+            game.setLocationRelativeTo(null);
             game.setResizable(false);
             this.setVisible(false);
             game.setVisible(true);
