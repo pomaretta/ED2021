@@ -147,7 +147,7 @@ public class Computer {
      * @throws Exception if the computer is already closed.
      */
     public void stopComputer() throws Exception {
-        if(this.computerState){
+        if(!this.computerState){
             throw new Exception("Computer is closed.");
         } else {
             this.operativeSystem.stopSystem();

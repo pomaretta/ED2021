@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Samples/Computer/Computer.iml" filepath="$PROJECT_DIR$/Samples/Computer/Computer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Samples/Endevina/Endevina.iml" filepath="$PROJECT_DIR$/Samples/Endevina/Endevina.iml" />
       <module fileurl="file://$PROJECT_DIR$/Samples/Menus/Menus.iml" filepath="$PROJECT_DIR$/Samples/Menus/Menus.iml" />
       <module fileurl="file://$PROJECT_DIR$/ProvaGIT/ProvaGIT.iml" filepath="$PROJECT_DIR$/ProvaGIT/ProvaGIT.iml" />
     </modules>
