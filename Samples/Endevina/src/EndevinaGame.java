@@ -12,6 +12,7 @@
 */
 
 import Gui.Start;
+import Endevina.*;
 
 /**
  * @author Carlos Pomares
