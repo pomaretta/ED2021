@@ -1,4 +1,4 @@
-package Gui;
+package RandomerGUI;
 
 /*
 
@@ -17,8 +17,8 @@ package Gui;
  * @author Carlos Pomares
  */
 
-import Endevinador.Endevinador;
-import Random.RandomNumber;
+import RandomerUtils.Endevinador;
+import RandomerUtils.RandomNumber;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -26,18 +26,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
-public class MainScreen extends JFrame {
+public class GameScreen extends JFrame {
 
     private JPanel mainPanel;
-    private JPanel topPanel;
-    private JPanel leftPanel;
 
     private JTextField numberField;
     private JButton checkNumberButton;
-
-    private JLabel successLabel;
-
-    private JPanel rightPanel;
 
     private JList insertedNumbersList;
     private JLabel hiddenNumberLabel;
@@ -45,16 +39,17 @@ public class MainScreen extends JFrame {
     private JLabel hintLabel;
     private JLabel actualBalanceLabel;
 
+
+
     private ArrayList<Integer> introducedNumbersArray;
-    private DefaultListModel introducedNumbersModel;
-    private boolean success = false;
+    private DefaultListModel<Integer> introducedNumbersModel;
     private int actualTries = 0;
     private int maximumTries = 0;
     private int hiddenNumber;
     private int actualBalance = 0;
     private boolean gameType;
 
-    public MainScreen(int maximumTries,boolean gameType){
+    public GameScreen(int maximumTries, boolean gameType){
         super("Adivina el número");
         this.setContentPane(mainPanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -75,18 +70,18 @@ public class MainScreen extends JFrame {
 
     }
 
-    public void setTries(int numberOfTries){
-        this.actualTries = numberOfTries;
-    }
-
     private void startGame(){
+
+        /*this.introducedNumbersArray.clear();
+        this.introducedNumbersModel.removeAllElements();*/
+
         this.actualBalance -= 1;
         this.introducedNumbersArray = new ArrayList<>();
-        this.introducedNumbersModel = new DefaultListModel();
+        this.introducedNumbersModel = new DefaultListModel<Integer>();
+
         this.insertedNumbersList.setModel(introducedNumbersModel);
 
-        this.introducedNumbersArray.clear();
-        this.introducedNumbersModel.removeAllElements();
+
         refreshList();
 
         this.hiddenNumberLabel.setText("**");

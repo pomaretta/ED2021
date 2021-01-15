@@ -11,21 +11,23 @@
     
 */
 
-import Gui.Start;
-import Endevina.*;
+import RandomerGUI.ModeScreen;
 
 /**
  * @author Carlos Pomares
  */
 
-public class EndevinaGame {
+public class Randomer {
     public static void main(String[] args) {
 
-        Start screen = new Start();
+        // GUI Initialization
+        ModeScreen screen = new ModeScreen();
         screen.setSize(400,300);
         screen.setLocationRelativeTo(null);
         screen.setVisible(true);
-        // Endevina juego = new Endevina();
+
+        // CONSOLE Initialization
+        // RandomerConsole juego = new RandomerConsole();
 
     }
 }

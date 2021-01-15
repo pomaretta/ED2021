@@ -1,4 +1,4 @@
-package Random;
+package RandomerUtils;
 
 /*
 
@@ -12,8 +12,6 @@ package Random;
     DESCRIPTION
     
 */
-
-import java.util.Random;
 
 /**
  * @author Carlos Pomares

@@ -1,9 +1,9 @@
-package Endevina;
+package RandomerConsole;
 
 /*
 
     Project     ED21
-    Package     Endevina    
+    Package     RandomerConsole
     
     Version     1.0      
     Author      Carlos Pomares
@@ -13,8 +13,8 @@ package Endevina;
     
 */
 
-import Endevinador.Endevinador;
-import Random.RandomNumber;
+import RandomerUtils.Endevinador;
+import RandomerUtils.RandomNumber;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -23,13 +23,13 @@ import java.util.Scanner;
  * @author Carlos Pomares
  */
 
-public class Endevina {
+public class RandomerConsole {
 
     final private static ArrayList<String> ERRORS = new ArrayList<>();
 
     private static Scanner userIn;
 
-    public Endevina(){
+    public RandomerConsole(){
         userIn = new Scanner(System.in);
         menuPrincipal();
     }

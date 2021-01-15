@@ -1,4 +1,4 @@
-package Endevinador;
+package RandomerUtils;
 
 /*
 
