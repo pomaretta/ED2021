@@ -17,8 +17,7 @@ package RandomerGUI;
  * @author Carlos Pomares
  */
 
-import RandomerUtils.Endevinador;
-import RandomerUtils.RandomNumber;
+import RandomerUtils.RandomerGenerator;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -39,14 +38,12 @@ public class GameScreen extends JFrame {
     private JLabel hintLabel;
     private JLabel actualBalanceLabel;
 
-
-
     private ArrayList<Integer> introducedNumbersArray;
     private DefaultListModel<Integer> introducedNumbersModel;
-    private int actualTries = 0;
-    private int maximumTries = 0;
-    private int hiddenNumber;
-    private int actualBalance = 0;
+    private int actualTries; // CONVERT TO LOCAL
+    private int maximumTries;
+    private int hiddenNumber; // CONVERT TO LOCAL
+    private int actualBalance;
     private boolean gameType;
 
     public GameScreen(int maximumTries, boolean gameType){
@@ -88,9 +85,9 @@ public class GameScreen extends JFrame {
         this.actualBalanceLabel.setText(String.valueOf(this.actualBalance) + "€");
 
         if(gameType){
-            this.hiddenNumber = RandomNumber.generateNumber(99);
+            this.hiddenNumber = RandomerGenerator.generateNumber(99);
         } else {
-            this.hiddenNumber = RandomNumber.generateNumber(9);
+            this.hiddenNumber = RandomerGenerator.generateNumber(9);
         }
 
         this.numberOfTriesLabel.setText(Integer.toString(this.actualTries));
@@ -107,8 +104,7 @@ public class GameScreen extends JFrame {
         try {
             number = Integer.parseInt(numberField.getText());
 
-            if(Endevinador.checkNumber(number,this.hiddenNumber)){
-                success = true;
+            if(RandomerGenerator.checkNumber(number,this.hiddenNumber)){
                 this.actualBalance += 5;
                 this.hiddenNumberLabel.setText(Integer.toString(this.hiddenNumber));
                 String message = String.format("Winner. Added 5€\nHidden number: %d\nNew game for 1€?",this.hiddenNumber);
@@ -144,7 +140,7 @@ public class GameScreen extends JFrame {
             } else {
                 this.actualTries--;
                 this.numberOfTriesLabel.setText(Integer.toString(this.actualTries));
-                this.hintLabel.setText(generateHint(number,this.hiddenNumber));
+                this.hintLabel.setText(RandomerGenerator.generateHint(RandomerGenerator.generateHint(number,this.hiddenNumber)));
                 this.introducedNumbersArray.add(number);
                 refreshList();
             }
@@ -168,10 +164,6 @@ public class GameScreen extends JFrame {
 
     private boolean checkBalance(){
         return this.actualBalance <= 0;
-    }
-
-    private String generateHint(int userNumber, int hiddenNumber){
-        return (Endevinador.generateHint(userNumber,hiddenNumber)) ? "Número más alto" : "Número más bajo";
     }
 
 }

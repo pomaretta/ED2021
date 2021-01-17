@@ -12,6 +12,7 @@
 */
 
 import RandomerGUI.ModeScreen;
+import RandomerConsole.RandomerConsole;
 
 /**
  * @author Carlos Pomares
@@ -21,13 +22,13 @@ public class Randomer {
     public static void main(String[] args) {
 
         // GUI Initialization
-        ModeScreen screen = new ModeScreen();
-        screen.setSize(400,300);
-        screen.setLocationRelativeTo(null);
-        screen.setVisible(true);
+        /*ModeScreen randomerGui = new ModeScreen();
+        randomerGui.setSize(400,300);
+        randomerGui.setLocationRelativeTo(null);
+        randomerGui.setVisible(true);*/
 
         // CONSOLE Initialization
-        // RandomerConsole juego = new RandomerConsole();
+        RandomerConsole randomerConsole = new RandomerConsole();
 
     }
 }
