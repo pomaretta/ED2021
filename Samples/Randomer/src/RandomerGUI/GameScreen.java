@@ -40,18 +40,29 @@ public class GameScreen extends JFrame {
 
     private ArrayList<Integer> introducedNumbersArray;
     private DefaultListModel<Integer> introducedNumbersModel;
-    private int actualTries; // CONVERT TO LOCAL
+
+    private int actualTries;
     private int maximumTries;
-    private int hiddenNumber; // CONVERT TO LOCAL
+    private int hiddenNumber;
     private int actualBalance;
     private boolean gameType;
 
+    /**
+     *
+     * Initializes the game and set the maximum tries given
+     * by the ModeScreen and the Game type.
+     *
+     * @param maximumTries the user tries.
+     * @param gameType the game type.
+     */
     public GameScreen(int maximumTries, boolean gameType){
+        // Initialize screen.
         super("Adivina el número");
         this.setContentPane(mainPanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
 
+        // Set properties values.
         this.maximumTries = maximumTries;
         this.actualTries = maximumTries;
         this.gameType = gameType;
@@ -67,17 +78,18 @@ public class GameScreen extends JFrame {
 
     }
 
+    /**
+     *
+     * Will establish some game properties and assign the values.
+     *
+     */
     private void startGame(){
-
-        /*this.introducedNumbersArray.clear();
-        this.introducedNumbersModel.removeAllElements();*/
 
         this.actualBalance -= 1;
         this.introducedNumbersArray = new ArrayList<>();
         this.introducedNumbersModel = new DefaultListModel<Integer>();
 
         this.insertedNumbersList.setModel(introducedNumbersModel);
-
 
         refreshList();
 
@@ -92,10 +104,17 @@ public class GameScreen extends JFrame {
 
         this.numberOfTriesLabel.setText(Integer.toString(this.actualTries));
 
-        // System.out.println("GAME TYPE: " + gameType + " HIDDEN NUMBER: " + hiddenNumber);
+        //System.out.println("GAME TYPE: " + gameType + " HIDDEN NUMBER: " + hiddenNumber);
 
     }
 
+    /**
+     *
+     * Checks if the number introduced and the hidden number are equals
+     * and check some other values as actual tries of the user and the balance.
+     *
+     * @param e the action event listener.
+     */
     private void checkNumber(ActionEvent e){
 
         int number;
@@ -151,10 +170,28 @@ public class GameScreen extends JFrame {
 
     }
 
+    /**
+     * Reset to 20 the actualBalance of the user.
+     */
     private void gameOver(){
         this.actualBalance = 20;
     }
 
+    /**
+     *
+     * Checks the balance of the user.
+     *
+     * @return true if the balance is 0 or lower.
+     */
+    private boolean checkBalance(){
+        return this.actualBalance <= 0;
+    }
+
+    /**
+     *
+     * Clear the arraylist of the list and waits for new values.
+     *
+     */
     private void refreshList(){
         this.introducedNumbersModel.removeAllElements();
         for(Integer number : introducedNumbersArray){
@@ -162,8 +199,6 @@ public class GameScreen extends JFrame {
         }
     }
 
-    private boolean checkBalance(){
-        return this.actualBalance <= 0;
-    }
+
 
 }
