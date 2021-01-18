@@ -22,7 +22,7 @@
             </constraints>
             <properties>
               <font size="36" style="1"/>
-              <text value="Adivinator"/>
+              <text value="Randomer"/>
             </properties>
           </component>
         </children>
