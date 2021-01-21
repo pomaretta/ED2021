@@ -19,29 +19,34 @@ import Cinema.Cinema;
 
 public class CinemaMain extends Thread {
 
-    public CinemaMain(){
-        long counter = 0;
+    public CinemaMain(String type){
 
-        try {
-            for (int i = 0; i < 10; i++) {
-                Cinema cine = new Cinema();
-                System.out.println(cine.nanotime);
-                counter += cine.nanotime;
-                System.out.println("WAITING 2 SECONDS.");
-                sleep(1000);
+        if("statistics".equals(type)){
+            double counter = 0;
+
+            try {
+                for (int i = 0; i < 10; i++) {
+                    Cinema cine = new Cinema("");
+                    System.out.println(cine.nanotime);
+                    counter += cine.nanotime;
+                    System.out.println("WAITING 2 SECONDS.");
+                    sleep(2000);
+                }
+            } catch (Exception e){
+                System.out.println(e.getMessage());
             }
-        } catch (Exception e){
-            System.out.println(e.getMessage());
+
+            System.out.println("TIEMPO TOTAL NS: " + counter);
+            System.out.println("TIEMPO TOTAL MS: " + (counter / 1000000));
+            System.out.println("LA MEDIA ES: " + ((counter / 1000000) / 10));
         }
 
-        System.out.println("TIEMPO TOTAL NS: " + counter);
-        System.out.println("TIEMPO TOTAL MS: " + (counter / 1000000));
-        System.out.println("LA MEDIA ES: " + ((counter / 1000000) / 10));
+        Cinema cine = new Cinema("stats");
 
     }
 
     public static void main(String[] args) {
-        CinemaMain main = new CinemaMain();
+        CinemaMain main = new CinemaMain("");
     }
 
 }

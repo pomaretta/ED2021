@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Cinema">
+    <output-path>$PROJECT_DIR$/out/artifacts/Cinema</output-path>
+    <root id="archive" name="Cinema.jar">
+      <element id="module-output" name="Cinema" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/Samples/Cinema/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>

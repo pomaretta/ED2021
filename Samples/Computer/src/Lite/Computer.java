@@ -180,13 +180,16 @@ public class Computer {
 
         // Array of applications temporally
         ArrayList<Application> applications;
+        String operativeSystemName = "";
 
         // If operative system exists will show an application objects.
         if(operativeSystem != null){
             applications = operativeSystem.getOsSoftware();
+            operativeSystemName = operativeSystem.getOsName();
         } else {
             // Else if do not exists an operative system in the computer will show null
             applications = null;
+            operativeSystemName = null;
         }
 
         return "Computer{" +
@@ -196,7 +199,7 @@ public class Computer {
                 ", Free ramMemory=" + ramMemory +
                 ", Free hardDisk=" + hardDisk +
                 ", computerState=" + computerState +
-                ", operativeSystem=" + operativeSystem +
+                ", operativeSystem=" + operativeSystemName +
                 ", Applications=" + applications +
                 '}';
     }
