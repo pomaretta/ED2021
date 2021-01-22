@@ -13,6 +13,7 @@ package Cinema;
     
 */
 
+import Pelicula.Pelicula;
 import Personas.Persona;
 import Utility.ClearConsole;
 
@@ -23,6 +24,7 @@ import Utility.ClearConsole;
 public class Cinema extends Thread {
 
     private Persona[] asientos;
+    private Pelicula film;
 
     private int type;
     private int zoneAge;
@@ -43,11 +45,17 @@ public class Cinema extends Thread {
         }
 
         this.asientos = new Persona[72];
-        generateZone();
+        this.film = new Pelicula();
         this.collectedTickets = 0;
         llenarCine();
 
         if(this.type == -1){
+
+            System.out.printf("\n%-30s %-15s %-15s",
+                    "FILM TITLE", "FILM TICKET", "FILM AGE");
+            System.out.printf("\n%-30s %-15d %-15d",
+                    this.film.getZoneTitle(), this.film.getZoneTicket(), this.film.getZoneAge());
+
             System.out.printf("\n%-15s %-15s","TIME MS","LAST PERSON");
             System.out.printf("\n%-15f %-15d",((double)this.nanotime / 1000000),this.lastPerson);
         }
@@ -59,11 +67,6 @@ public class Cinema extends Thread {
         cinemaRuntime();
         long stopTime = System.nanoTime();
         this.nanotime = (stopTime - startTime);
-    }
-
-    private void generateZone(){
-        this.zoneAge = (int)(Math.random() * 100 + 1);
-        this.zoneTicket = (int)(Math.random() * 50 + 1);
     }
 
     private void cinemaRuntime(){
@@ -86,6 +89,9 @@ public class Cinema extends Thread {
                     }
                 }
             }
+
+            this.collectedTickets = this.film.getZoneTicket() * this.asientos.length;
+
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
@@ -96,7 +102,6 @@ public class Cinema extends Thread {
         int seat = (int)(Math.random() * 72);
         if(this.asientos[seat] == null){
             this.asientos[seat] = person;
-            this.collectedTickets += this.zoneTicket;
         } else {
             putPerson(person);
         }
@@ -106,7 +111,6 @@ public class Cinema extends Thread {
         int seat = (int)(Math.random() * 72);
         if(this.asientos[seat] == null){
             this.asientos[seat] = person;
-            this.collectedTickets += this.zoneTicket;
             this.lastPerson++;
         } else {
             if(lastPerson)
@@ -116,7 +120,7 @@ public class Cinema extends Thread {
     }
 
     private boolean checkRequirements(Persona person){
-        return (person.getDinero() >= this.zoneTicket) && (person.getEdad() >= this.zoneAge);
+        return (person.getDinero() >= this.film.getZoneTicket()) && (person.getEdad() >= this.film.getZoneAge());
     }
 
     private boolean isFilled(){

@@ -39,14 +39,15 @@ public class CinemaMain extends Thread {
             System.out.println("TIEMPO TOTAL NS: " + counter);
             System.out.println("TIEMPO TOTAL MS: " + (counter / 1000000));
             System.out.println("LA MEDIA ES: " + ((counter / 1000000) / 10));
-        }
 
-        Cinema cine = new Cinema("stats");
+        } else {
+            Cinema cine = new Cinema("stats");
+        }
 
     }
 
     public static void main(String[] args) {
-        CinemaMain main = new CinemaMain("");
+        CinemaMain main = new CinemaMain("statistics");
     }
 
 }
