@@ -1,8 +1,10 @@
 package Bingo;
 
+import java.util.ArrayList;
+
 public class Machine {
 
-    private int[] numbers;
+    private ArrayList<Integer> numbers;
 
     private int minNumber;
     private int maxNumber;
@@ -14,31 +16,30 @@ public class Machine {
     }
 
     public int getNumber(){
-        int numberToGet = (int)(Math.random() * maxNumber);
-        if(this.numbers[numberToGet] != 0){
-            this.numbers[numberToGet] = 0;
-        } else {
-            getNumber();
+        int numberToGet = (int)(Math.random() * maxNumber + minNumber);
+        while(!this.numbers.contains(numberToGet)){
+            numberToGet = (int)(Math.random() * maxNumber + minNumber);
         }
-        return numberToGet + 1;
+        this.numbers.remove(this.numbers.indexOf(numberToGet));
+        return numberToGet;
     }
 
-    private int[] generateNumbers(){
-        int[] output = new int[this.maxNumber];
+    private ArrayList<Integer> generateNumbers(){
+        ArrayList<Integer> output = new ArrayList<Integer>(this.maxNumber);
         for (int i = 0; i < this.maxNumber; i++) {
-            output[i] = minNumber + i;
+            output.add(minNumber + i);
         }
         return output;
     }
 
     public boolean isFull(){
         int flag = 0;
-        for (int i = 0; i < this.numbers.length ; i++) {
-            if(this.numbers[i] == 0){
+        for (int i = 0; i < this.numbers.size() ; i++) {
+            if(this.numbers.get(i) == null){
                 flag++;
             }
         }
-        return flag == this.numbers.length;
+        return flag == this.numbers.size();
     }
 
 }

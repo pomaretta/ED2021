@@ -1,10 +1,11 @@
 package Bingo;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class Player {
 
-    private int[] letter;
+    private ArrayList<Integer> letter;
     private int maxLetterNumber;
     private int maxNumberInLetter;
 
@@ -14,38 +15,29 @@ public class Player {
         this.letter = generateLetter();
     }
 
-    public int[] getLetter() {
-        return letter;
-    }
-
     public void removeLetterValue(int value){
         if(this.containsValue(this.letter,value)){
-            this.letter[this.getValuePosition(this.letter,value)] = 0;
+            this.letter.remove(this.letter.indexOf(value));
         }
     }
 
     public boolean isFilled(){
-        int counter = 0;
-        for(Integer number : this.letter){
-            if(number == 0){
-                counter++;
-            }
-        }
-        if(counter == this.maxLetterNumber){
-            return true;
-        }
-        return false;
+        return this.letter.size() == 0;
     }
 
-    private int[] generateLetter(){
-        int[] letter = new int[this.maxLetterNumber];
+    public ArrayList<Integer> getLetter() {
+        return letter;
+    }
+
+    private ArrayList<Integer> generateLetter(){
+        ArrayList<Integer> letter = new ArrayList<Integer>(this.maxLetterNumber);
         for (int i = 0; i < this.maxLetterNumber; i++) {
-            letter[i] = this.generateValue(letter);
+            letter.add(this.generateValue(letter));
         }
         return letter;
     }
 
-    private int generateValue(int[] letter){
+    private int generateValue(ArrayList<Integer> letter){
         int randomNumber = (int)(Math.random() * maxNumberInLetter + 1);
         if(this.containsValue(letter,randomNumber)){
             generateValue(letter);
@@ -53,10 +45,10 @@ public class Player {
         return randomNumber;
     }
 
-    private boolean containsValue(int[] letter,int value){
+    private boolean containsValue(ArrayList<Integer> letter,int value){
         boolean flag = false;
-        for (int i = 0; i < letter.length; i++) {
-            if(value == letter[i]){
+        for (Integer number : letter) {
+            if(value == number){
                 flag = true;
                 break;
             }

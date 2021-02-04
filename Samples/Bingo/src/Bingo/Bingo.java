@@ -7,7 +7,7 @@ public class Bingo {
     private final int PLAYER_LETTERS = 10;
 
     private Machine maquina;
-    private Player[] players;
+    public Player[] players;
     private int playerNumber;
 
     public Bingo(int playerNumber){
@@ -25,26 +25,6 @@ public class Bingo {
                 break;
             }
         }
-    }
-
-    public int getMIN_NUMBER() {
-        return MIN_NUMBER;
-    }
-
-    public int getMAX_NUMBER() {
-        return MAX_NUMBER;
-    }
-
-    public int getPLAYER_LETTERS() {
-        return PLAYER_LETTERS;
-    }
-
-    public Player[] getPlayers() {
-        return players;
-    }
-
-    public int getPlayerNumber() {
-        return playerNumber;
     }
 
     private Player[] generatePlayers(){
