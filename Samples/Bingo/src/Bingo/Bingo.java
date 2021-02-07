@@ -1,5 +1,7 @@
 package Bingo;
 
+import java.util.ArrayList;
+
 public class Bingo {
 
     private final int MIN_NUMBER = 1;
@@ -7,7 +9,7 @@ public class Bingo {
     private final int PLAYER_LETTERS = 10;
 
     private Machine maquina;
-    public Player[] players;
+    private Player[] players;
     private int playerNumber;
 
     public Bingo(int playerNumber){
@@ -17,14 +19,19 @@ public class Bingo {
     }
 
     public void startGame(){
-        while(!this.maquina.isFull()){
-            int bingoNumber = this.maquina.getNumber();
-            players[0].removeLetterValue(bingoNumber);
-            players[1].removeLetterValue(bingoNumber);
-            if(players[0].isFilled() || players[1].isFilled()){
+        int counter = 0;
+        while (!maquina.isEmpty()){
+            int number = maquina.getNumber();
+            this.players[0].removeValue(number);
+            this.players[1].removeValue(number);
+            if(this.players[0].isEmpty() || this.players[1].isEmpty()){
                 break;
             }
         }
+    }
+
+    public Player[] getPlayers(){
+        return this.players;
     }
 
     private Player[] generatePlayers(){
