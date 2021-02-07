@@ -22,49 +22,55 @@ import java.util.ArrayList;
 public class Estanteria {
 
     private final int LIBROS_MAXIMOS = 10;
-    private final ArrayList<Libro> libros = new ArrayList<Libro>(this.LIBROS_MAXIMOS);
-    private final Libro[] librosSimple = new Libro[this.LIBROS_MAXIMOS];
+    private final Libro[] libros = new Libro[this.LIBROS_MAXIMOS];
 
-    public Estanteria(){
-
-    }
-
-    public void afegirLlibre(Libro libro) throws Exception {
-        if(this.libros.contains(libro)){
+    public void afegirLlibre(Libro llibre) throws Exception {
+        if(containsLlibre(llibre)){
             throw new Exception("Libro ya en la estanteria.");
+        } else {
+            addAtFirstPosition(llibre);
         }
-        this.libros.add(libro);
     }
 
-    public void eliminarLlibre(Libro libro) throws Exception {
-        if(!this.libros.contains(libro)){
-            throw new Exception("El libro no está en la estanteria.");
+    public void eliminarLlibre(String arg, String criterio) throws Exception {
+        if(indexOfLlibre(arg,criterio) != -1){
+            this.libros[indexOfLlibre(arg,criterio)] = null;
+        } else {
+            throw new Exception("El libro no esta en la estanteria.");
         }
-        this.libros.remove(libro);
     }
 
     public void veureTop(){
 
         System.out.println("-------- TOP --------");
 
-        ArrayList<Libro> orderedList = orderArray(this.libros);
-        System.out.printf("%-15s %-15s %-15s",
-                "Título","Autor","Calificacion");
-        for(Libro libro : orderedList){
-            System.out.printf("\n%-15s %-15s %-15f",
-                    libro.getTitulo(),libro.getAutor(),libro.getCalificacion());
-        }
+        Libro[] orderedList = orderArray(this.libros);
+        showEstanteria(orderedList);
 
         System.out.println("\n-------- END --------");
 
     }
 
     public void veureEstanteria(){
-
+        showEstanteria(this.libros);
     }
 
-    private ArrayList<Libro> orderArray(ArrayList<Libro> array){
-        ArrayList<Libro> output = array;
+    private void showEstanteria(Libro[] libros){
+        System.out.printf("%-50s %-30s %-15s",
+                "Título","Autor","Calificacion");
+        for(Libro libro : libros){
+            if(libro != null){
+                System.out.printf("\n%-50s %-30s %-15f",
+                        libro.getTitulo(),libro.getAutor(),libro.getCalificacion());
+            } else {
+                System.out.printf("\n%-15s %-15s %-15f",
+                        null,null,null);
+            }
+        }
+    }
+
+    private Libro[] orderArray(Libro[] array){
+        ArrayList<Libro> output = convertSimpleToList(array);
         int i, j;
         Libro temp;
         for(i = 0; i < output.size(); i++){
@@ -76,23 +82,58 @@ public class Estanteria {
                 }
             }
         }
-        return output;
+        return convertListToSimple(output);
     }
 
-    private Libro[] orderArraySimple(Libro[] array){
-        Libro[] output = array;
-        int i, j;
-        Libro temp;
-        for(i = 0; i < output.length; i++){
-            for(j = 0; j < output.length-i-1; j++){
-                if(Libro.comparate(output[j],output[j+1]) == -1){
-                    temp = output[j];
-                    output[j] = output[j+1];
-                    output[j+1] = temp;
-                }
+    private ArrayList<Libro> convertSimpleToList(Libro[] input){
+        ArrayList<Libro> output = new ArrayList<Libro>();
+        for(Libro libro : input){
+            if(libro != null){
+                output.add(libro);
             }
         }
         return output;
+    }
+
+    private Libro[] convertListToSimple(ArrayList<Libro> input){
+        Libro[] output = new Libro[LIBROS_MAXIMOS];
+        for (int i = 0; i < input.size(); i++) {
+            output[i] = input.get(i);
+        }
+        return output;
+    }
+
+    private void addAtFirstPosition(Libro llibre){
+        for (int i = 0; i < this.libros.length; i++) {
+            if(this.libros[i] == null){
+                this.libros[i] = llibre;
+                break;
+            }
+        }
+    }
+
+    private int indexOfLlibre(String arg,String mode) throws Exception {
+        for (int i = 0; i < this.libros.length; i++) {
+            if(mode.toLowerCase().equals("autor")){
+                if(this.libros[i].getAutor().equals(arg)){
+                    return i;
+                }
+            } else if(mode.toLowerCase().equals("titulo") || mode.toLowerCase().equals("título")){
+                if(this.libros[i].getTitulo().equals(arg)){
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
+
+    private boolean containsLlibre(Libro llibre){
+        for(Libro libro : this.libros){
+            if(libro == llibre){
+                return true;
+            }
+        }
+        return false;
     }
 
 }
