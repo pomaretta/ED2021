@@ -12,11 +12,15 @@ public class BingoTest {
         bingo.startGame();
         long stopTime = System.nanoTime();
 
-        System.out.print("Player 0: ");
-        showLetter(bingo.players[0].getLetter());
+        showLetter(bingo.getPlayers()[0].getLetter());
+        System.out.println("\n");
+        showLetter(bingo.getPlayers()[1].getLetter());
+        System.out.println("\n");
 
-        System.out.print("\nPlayer 1: ");
-        showLetter(bingo.players[1].getLetter());
+        System.out.println(
+                (bingo.getPlayers()[0].isEmpty() && bingo.getPlayers()[1].isEmpty()) ? "Empate"
+                        : (bingo.getPlayers()[0].isEmpty()) ? "Player 0 GANA"
+                        : (bingo.getPlayers()[1].isEmpty()) ? "Player 1 GANA" : null);
 
         System.out.println("\nTime to resolve: " + ((double)(stopTime - startTime) / 1000000));
 

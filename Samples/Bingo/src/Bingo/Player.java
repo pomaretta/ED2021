@@ -15,13 +15,11 @@ public class Player {
         this.letter = generateLetter();
     }
 
-    public void removeLetterValue(int value){
-        if(this.containsValue(this.letter,value)){
-            this.letter.remove(this.letter.indexOf(value));
-        }
+    public void removeValue(int value){
+        this.letter.remove((Integer) value);
     }
 
-    public boolean isFilled(){
+    public boolean isEmpty(){
         return this.letter.size() == 0;
     }
 
@@ -30,41 +28,15 @@ public class Player {
     }
 
     private ArrayList<Integer> generateLetter(){
-        ArrayList<Integer> letter = new ArrayList<Integer>(this.maxLetterNumber);
-        for (int i = 0; i < this.maxLetterNumber; i++) {
-            letter.add(this.generateValue(letter));
+        ArrayList<Integer> letter = new ArrayList<Integer>();
+        for(int index = 0; index < this.maxLetterNumber; index++){
+            int randomNumber = (int)(Math.random() * this.maxNumberInLetter + 1);
+            while(letter.contains((Integer) randomNumber)){
+                randomNumber = (int)(Math.random() * this.maxNumberInLetter + 1);
+            }
+            letter.add(randomNumber);
         }
         return letter;
-    }
-
-    private int generateValue(ArrayList<Integer> letter){
-        int randomNumber = (int)(Math.random() * maxNumberInLetter + 1);
-        if(this.containsValue(letter,randomNumber)){
-            generateValue(letter);
-        }
-        return randomNumber;
-    }
-
-    private boolean containsValue(ArrayList<Integer> letter,int value){
-        boolean flag = false;
-        for (Integer number : letter) {
-            if(value == number){
-                flag = true;
-                break;
-            }
-        }
-        return flag;
-    }
-
-    private int getValuePosition(int[] letter,int value){
-        int flag = -1;
-        for (int i = 0; i < letter.length; i++) {
-            if(value == letter[i]){
-                flag = i;
-                break;
-            }
-        }
-        return flag;
     }
 
 }
